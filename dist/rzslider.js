@@ -1,7 +1,7 @@
 /*! angularjs-slider - v2.8.0 - 
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
- 2016-02-08 */
+ 2016-02-13 */
 /*jslint unparam: true */
 /*global angular: false, console: false, define, module */
 (function(root, factory) {
@@ -738,12 +738,13 @@
        */
       updateTicksScale: function() {
         if (!this.options.showTicks) return;
-
-        var positions = '',
-          ticksCount = Math.round((this.maxValue - this.minValue) / this.step) + 1;
+        var step = this.step;
+        if(angular.isNumber(this.options.showTicks))
+          step = this.options.showTicks;
+        var ticksCount = Math.round((this.maxValue - this.minValue) / step) + 1;
         this.scope.ticks = [];
         for (var i = 0; i < ticksCount; i++) {
-          var value = this.roundStep(this.minValue + i * this.step);
+          var value = this.roundStep(this.minValue + i * step);
           var tick = {
             selected: this.isTickSelected(value)
           };
